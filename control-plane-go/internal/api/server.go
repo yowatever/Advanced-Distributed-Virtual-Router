@@ -6,8 +6,20 @@ import (
     "net/http"
     "time"
     
-    "github.com/yourusername/dvr-control-plane/internal/raft"
+        "github.com/hashicorp/raft"
 )
+type Route struct {
+    Destination string `json:"destination"`
+    NextHop     string `json:"next_hop"`
+    Metric      int    `json:"metric"`
+}
+
+type Command struct {
+    Op    string `json:"op"`
+    Key   string `json:"key"`
+    Value Route  `json:"value"`
+}
+
 
 type Server struct {
     raft *raft.Raft

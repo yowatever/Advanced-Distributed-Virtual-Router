@@ -10,6 +10,18 @@ import (
     raftboltdb "github.com/hashicorp/raft-boltdb"
 )
 
+type Route struct {
+    Destination string `json:"destination"`
+    NextHop     string `json:"next_hop"`
+    Metric      int    `json:"metric"`
+}
+
+type Command struct {
+    Op    string `json:"op"`
+    Key   string `json:"key"`
+    Value Route  `json:"value"`
+}
+
 func SetupRaft(nodeID, raftAddr, dataDir string) (*raft.Raft, error) {
     config := raft.DefaultConfig()
     config.LocalID = raft.ServerID(nodeID)
