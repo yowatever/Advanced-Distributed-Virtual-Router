@@ -1,0 +1,21 @@
+# Binaries
+/bin/
+/control-plane-go/dvr-control-plane
+/data-plane-cpp/dvr-data-plane
+
+# Dependencies
+/vendor/
+/go/pkg/
+/data-plane-cpp/build/
+
+# Configuration
+*.local
+.env
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
