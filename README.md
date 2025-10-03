@@ -2,7 +2,7 @@
 
 A **production-grade, fault-tolerant distributed routing system** built with Go + Raft consensus and high-performance C++ data plane. This system provides distributed route management with strong consistency guarantees.
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────┐   Raft Consensus   ┌─────────────────┐
@@ -274,4 +274,5 @@ The system provides detailed Raft consensus logs:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 
