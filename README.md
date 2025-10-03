@@ -90,75 +90,6 @@ curl http://localhost:9092/routes
 curl http://localhost:9093/routes
 ```
 
-## 📁 Project Structure
-
-```
-distributed-dvr/
-├── control-plane-go/          # Go control plane with Raft
-│   ├── cmd/main.go           # Main application entry point
-│   ├── internal/
-│   │   ├── api/              # HTTP REST API handlers
-│   │   └── raft/             # Raft FSM and setup
-│   └── go.mod
-├── data-plane-cpp/           # C++ data plane (in progress)
-│   ├── src/                  # Source files
-│   ├── include/              # Header files
-│   └── proto/                # gRPC protocol definitions
-├── deploy/
-│   └── docker/               # Docker configurations
-├── scripts/
-│   └── start-cluster.sh      # Multi-node startup script
-└── README.md
-```
-
-## 🔌 API Reference
-
-### Health Check
-```http
-GET /health
-```
-Response:
-```json
-{
-  "status": "healthy",
-  "raft_state": "Leader"
-}
-```
-
-### Add Route
-```http
-POST /routes
-Content-Type: application/json
-
-{
-  "destination": "10.1.0.0/16",
-  "next_hop": "192.168.1.1", 
-  "metric": 100
-}
-```
-
-### Get Routes
-```http
-GET /routes
-```
-Response:
-```json
-{
-  "routes": {
-    "10.1.0.0/16": {
-      "destination": "10.1.0.0/16",
-      "next_hop": "192.168.1.1",
-      "metric": 100
-    }
-  }
-}
-```
-
-### Cluster Status
-```http
-GET /cluster/status
-```
-
 ## Configuration
 
 ### Environment Variables
@@ -198,7 +129,7 @@ export API_ADDR=:9093
 export DATA_DIR=./data/node3
 ```
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ```bash
 cd deploy/docker
@@ -210,47 +141,7 @@ This starts a 3-node cluster with ports:
 - Node 2: API 9092, Raft 8302  
 - Node 3: API 9093, Raft 8303
 
-## 🔧 Development
 
-### Building from Source
-
-```bash
-# Control Plane (Go)
-cd control-plane-go
-go build -o dvr-control-plane ./cmd
-
-# Data Plane (C++) - Coming Soon
-cd ../data-plane-cpp
-mkdir build && cd build
-cmake ..
-make
-```
-
-### Running Tests
-
-```bash
-# Run unit tests
-cd control-plane-go
-go test ./...
-
-# Test API endpoints
-./scripts/test-api.sh
-```
-
-## Monitoring
-
-### Logs
-The system provides detailed Raft consensus logs:
-- Leader election process
-- Log replication
-- Snapshot creation
-- FSM state changes
-
-### Metrics
-- Raft term and commit index
-- Node health status
-- Route table size
-- API request metrics
 
 ## Fault Tolerance
 
@@ -274,5 +165,6 @@ The system provides detailed Raft consensus logs:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 
 
