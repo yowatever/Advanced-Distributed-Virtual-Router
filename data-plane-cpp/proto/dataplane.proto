@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package dataplane;
+
+service DataPlaneService {
+    rpc SyncRoute(RouteUpdate) returns (SyncResponse);
+    rpc GetStats(StatsRequest) returns (StatsResponse);
+    rpc HealthCheck(HealthRequest) returns (HealthResponse);
+}
+
+message RouteUpdate {
+    string operation = 1;
+    string destination = 2;
+    string next_hop = 3;
+    int32 metric = 4;
+}
+
+message SyncResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message StatsRequest {}
+
+message StatsResponse {
+    map<string, string> stats = 1;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+    bool healthy = 1;
+    string status = 2;
+}
