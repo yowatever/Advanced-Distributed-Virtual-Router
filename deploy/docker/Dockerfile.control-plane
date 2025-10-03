@@ -1,0 +1,17 @@
+FROM golang:1.21-alpine AS builder
+
+WORKDIR /app
+COPY control-plane-go/go.mod control-plane-go/go.sum ./
+RUN go mod download
+
+COPY control-plane-go/ ./
+RUN CGO_ENABLED=0 GOOS=linux go build -o dvr-control-plane ./cmd
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /root/
+COPY --from=builder /app/dvr-control-plane .
+
+EXPOSE 9090 8300
+CMD ["./dvr-control-plane"]

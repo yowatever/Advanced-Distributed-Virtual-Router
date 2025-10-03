@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  control-plane-1:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile.control-plane
+    ports:
+      - "9091:9090"
+      - "8301:8300"
+    environment:
+      - NODE_ID=node-1
+      - RAFT_ADDR=control-plane-1:8300
+      - API_ADDR=:9090
+      - DATA_DIR=/data
+    volumes:
+      - node1-data:/data
+
+  control-plane-2:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile.control-plane
+    ports:
+      - "9092:9090"
+      - "8302:8300"
+    environment:
+      - NODE_ID=node-2
+      - RAFT_ADDR=control-plane-2:8300
+      - API_ADDR=:9090
+      - DATA_DIR=/data
+    volumes:
+      - node2-data:/data
+    depends_on:
+      - control-plane-1
+
+  control-plane-3:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile.control-plane
+    ports:
+      - "9093:9090"
+      - "8303:8300"
+    environment:
+      - NODE_ID=node-3
+      - RAFT_ADDR=control-plane-3:8300
+      - API_ADDR=:9090
+      - DATA_DIR=/data
+    volumes:
+      - node3-data:/data
+    depends_on:
+      - control-plane-1
+
+volumes:
+  node1-data:
+  node2-data:
+  node3-data:
