@@ -40,9 +40,9 @@ func NewDVRFSM() *DVRFSM {
 	}
 }
 
-func (f *DVRFSM) Apply(log *raft.Log) interface{} {
+func (f *DVRFSM) Apply(raftLog *raft.Log) interface{} {
 	var cmd Command
-	if err := json.Unmarshal(log.Data, &cmd); err != nil {
+	if err := json.Unmarshal(raftLog.Data, &cmd); err != nil {
 		return fmt.Errorf("failed to unmarshal command: %v", err)
 	}
 
