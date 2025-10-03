@@ -5,8 +5,10 @@ import (
     "os"
     "path/filepath"
     
-    "github.com/yowatever/dvr-control-plane/internal/api"
-    "github.com/yowatever/dvr-control-plane/internal/raft"
+    
+    "github.com/hashicorp/raft"
+    "dvr-control-plane/internal/api"
+    "dvr-control-plane/internal/raft"
 )
 
 func main() {
